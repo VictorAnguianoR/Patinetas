@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Patinetas", "Patinetas\Patinetas\Patinetas.csproj", "{CBAF2E6C-8B58-4CEA-B9B2-4F0021AF2B0A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Patinetas.Client", "Patinetas\Patinetas.Client\Patinetas.Client.csproj", "{E97303DA-6A84-4ADF-B04F-6F23D448D26D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBAF2E6C-8B58-4CEA-B9B2-4F0021AF2B0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBAF2E6C-8B58-4CEA-B9B2-4F0021AF2B0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBAF2E6C-8B58-4CEA-B9B2-4F0021AF2B0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBAF2E6C-8B58-4CEA-B9B2-4F0021AF2B0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E97303DA-6A84-4ADF-B04F-6F23D448D26D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E97303DA-6A84-4ADF-B04F-6F23D448D26D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E97303DA-6A84-4ADF-B04F-6F23D448D26D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E97303DA-6A84-4ADF-B04F-6F23D448D26D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FAB0AEFA-FC78-4EC5-B0CC-2929E9C743B1}
+	EndGlobalSection
+EndGlobal
