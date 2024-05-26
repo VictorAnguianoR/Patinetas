@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<PatinetasDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IRepositorioProveedores, RepositorioProveedor>();
+builder.Services.AddScoped<IRepositorioInventarios, RepositorioInventario>();
+builder.Services.AddScoped<IRepositoriosVentas, RepositorioVentas>();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();

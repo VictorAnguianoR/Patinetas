@@ -11,5 +11,7 @@ namespace Patinetas.Modelos
         }
         public DbSet<Proveedor> Proveedores { get; set; }
         public DbSet<Inventario> Inventarios { get; set; }
+
+        public DbSet<Venta> Ventas { get; set; }
     }
 }

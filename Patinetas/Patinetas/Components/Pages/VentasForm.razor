@@ -1,0 +1,79 @@
+﻿@page "/ventas/nueva"
+@page "/ventas/editar/{Id:int}"
+@rendermode InteractiveServer
+@inject NavigationManager _navigator
+@inject IRepositoriosVentas _repositorio
+
+<h2>@_mensaje Venta</h2>
+
+<EditForm Model="_venta" FormName="frmVenta" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <div class="row mb-3">
+        <label for="txtFechaHora" class="col-2 col-form-label">Fecha y hora</label>
+        <div class="col-10">
+            <InputDate id="txtFechaHora" class="form-control" @bind-Value="_venta.FechaHora" />
+            <ValidationMessage For="()=>_venta.FechaHora" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="txtCantidadVendida" class="col-2 col-form-label">Cantidad vendida</label>
+        <div class="col-10">
+            <InputNumber id="txtCantidadVendida" class="form-control" @bind-Value="_venta.CantidadVendida" />
+            <ValidationMessage For="()=>_venta.CantidadVendida" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="txtPrecioT" class="col-2 col-form-label">Precio total</label>
+        <div class="col-10">
+            <InputNumber id="txtPrecioT" class="form-control" @bind-Value="_venta.PrecioTotal" />
+            <ValidationMessage For="()=>_venta.PrecioTotal" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="txtIdPro" class="col-2 col-form-label">Id producto</label>
+        <div class="col-10">
+            <InputNumber id="txtIdPro" class="form-control" @bind-Value="_venta.IdProducto" />
+            <ValidationMessage For="()=>_venta.IdProducto" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <button class="btn btn-danger ms-3" @onclick="Cancelar" @onclick:preventDefault>Cancelar</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private string _mensaje = "";
+    private Venta? _venta = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id > 0)
+        {
+            _venta = await _repositorio.Get(Id);
+            _mensaje = "Modificar";
+        }
+        else
+        {
+            _mensaje = "Nuevo";
+        }
+    }
+
+    private async Task Guardar()
+    {
+        if (Id > 0)
+        {
+            await _repositorio.Update(Id, _venta!);
+        }
+        else
+        {
+            await _repositorio.Add(_venta!);
+        }
+        Cancelar();
+    }
+
+    private void Cancelar()
+    {
+        _navigator.NavigateTo("/ventas");
+    }
+}

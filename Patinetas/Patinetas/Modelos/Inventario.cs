@@ -9,8 +9,7 @@ namespace Patinetas.Modelos
         [Required(ErrorMessage = "El nombre es obligatorio")]
         public string? NombreProducto { get; set; }
 
-        [Required(ErrorMessage = "El correo es obligatorio")]
-     
+        [Required(ErrorMessage = "La cantidad es obligatoria")]
         public int CantidadDisponible { get; set; }
 
         [Required(ErrorMessage = "El precio es obligatorio")]
@@ -18,6 +17,9 @@ namespace Patinetas.Modelos
 
         [Required(ErrorMessage = "La clave es obligatoria")]
         public int ProveedorId { get; set; }
-        virtual public Proveedor? Proveedor { get; set; }    
+
+        virtual public Proveedor? Proveedor { get; set; }
+
+       
     }
 }

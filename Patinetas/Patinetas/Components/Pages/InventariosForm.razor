@@ -1,0 +1,79 @@
+﻿@page "/inventarios/nueva"
+@page "/inventarios/editar/{Id:int}"
+@rendermode InteractiveServer
+@inject NavigationManager _navigator
+@inject IRepositorioInventarios _repositorio
+
+<h2>@_mensaje Inventario</h2>
+
+<EditForm Model="_inventario" FormName="frmInventario" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <div class="row mb-3">
+        <label for="txtNombre" class="col-2 col-form-label">Nombre del producto</label>
+        <div class="col-10">
+            <InputText id="txtNombre" class="form-control" @bind-Value="_inventario.NombreProducto" />
+            <ValidationMessage For="()=>_inventario.NombreProducto" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="txtCantidad" class="col-2 col-form-label">Cantidad disponible</label>
+        <div class="col-10">
+            <InputNumber id="txtCantidad" class="form-control" @bind-Value="_inventario.CantidadDisponible" />
+            <ValidationMessage For="()=>_inventario.CantidadDisponible" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="txtPrecio" class="col-2 col-form-label">Precio</label>
+        <div class="col-10">
+            <InputNumber id="txtPrecio" class="form-control" @bind-Value="_inventario.Precio" />
+            <ValidationMessage For="()=>_inventario.Precio" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="txtProveedor" class="col-2 col-form-label">Id proveedor</label>
+        <div class="col-10">
+            <InputNumber id="txtProveedor" class="form-control" @bind-Value="_inventario.ProveedorId" />
+            <ValidationMessage For="()=>_inventario.ProveedorId" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <button class="btn btn-danger ms-3" @onclick="Cancelar" @onclick:preventDefault>Cancelar</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private string _mensaje = "";
+    private Inventario? _inventario = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id > 0)
+        {
+            _inventario = await _repositorio.Get(Id);
+            _mensaje = "Modificar";
+        }
+        else
+        {
+            _mensaje = "Nuevo";
+        }
+    }
+
+    private async void Guardar()
+    {
+        if (Id > 0)
+        {
+            await _repositorio.Update(Id, _inventario!);
+        }
+        else
+        {
+            await _repositorio.Add(_inventario!);
+        }
+        Cancelar();
+    }
+
+    private void Cancelar()
+    {
+        _navigator.NavigateTo("/inventarios");
+    }
+}
