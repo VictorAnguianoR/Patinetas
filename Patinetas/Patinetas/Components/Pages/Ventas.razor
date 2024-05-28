@@ -1,10 +1,10 @@
-﻿@page "/venta"
+﻿@page "/ventas"
 @rendermode InteractiveServer
 @inject NavigationManager _navigator
 @inject IRepositoriosVentas _repositorio
 
 <h3>Ventas</h3>
-<a class="btn btn-success" href="ventas/nueva">Visualizar ventas</a>
+<a class="btn btn-success" href="ventas/nueva">Agregar ventas</a>
 @if (_ventas == null)
 {
     <div class="spinner-border" role="status">

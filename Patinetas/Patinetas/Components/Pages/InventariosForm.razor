@@ -3,6 +3,7 @@
 @rendermode InteractiveServer
 @inject NavigationManager _navigator
 @inject IRepositorioInventarios _repositorio
+@inject IRepositorioProveedores _repositorioProveedores
 
 <h2>@_mensaje Inventario</h2>
 
@@ -32,9 +33,13 @@
     <div class="row mb-3">
         <label for="txtProveedor" class="col-2 col-form-label">Id proveedor</label>
         <div class="col-10">
-            <InputNumber id="txtProveedor" class="form-control" @bind-Value="_inventario.ProveedorId" />
-            <ValidationMessage For="()=>_inventario.ProveedorId" />
-        </div>
+            <InputSelect @bind-Value="_inventario.ProveedorId">
+                @foreach(Proveedor proveedor in _proveedores ?? [])
+                {
+                    <option value="@proveedor.Id">@proveedor.Nombre</option>
+                }
+            </InputSelect>
+        </div
     </div>
     <button type="submit" class="btn btn-primary">Guardar</button>
     <button class="btn btn-danger ms-3" @onclick="Cancelar" @onclick:preventDefault>Cancelar</button>
@@ -45,9 +50,11 @@
     public int Id { get; set; }
     private string _mensaje = "";
     private Inventario? _inventario = new();
+    private List<Proveedor>? _proveedores;
 
     protected override async Task OnInitializedAsync()
     {
+        _proveedores = await _repositorioProveedores.GetAll();
         if (Id > 0)
         {
             _inventario = await _repositorio.Get(Id);
@@ -56,6 +63,7 @@
         else
         {
             _mensaje = "Nuevo";
+            _inventario.ProveedorId = _proveedores[0].Id;
         }
     }
 
@@ -74,6 +82,6 @@
 
     private void Cancelar()
     {
-        _navigator.NavigateTo("/inventarios");
+        _navigator.NavigateTo("/inventarios",forceLoad:true);
     }
 }

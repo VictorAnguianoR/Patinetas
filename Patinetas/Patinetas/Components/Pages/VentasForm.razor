@@ -3,6 +3,7 @@
 @rendermode InteractiveServer
 @inject NavigationManager _navigator
 @inject IRepositoriosVentas _repositorio
+@inject IRepositorioInventarios _repoInventarios
 
 <h2>@_mensaje Venta</h2>
 
@@ -11,7 +12,7 @@
     <div class="row mb-3">
         <label for="txtFechaHora" class="col-2 col-form-label">Fecha y hora</label>
         <div class="col-10">
-            <InputDate id="txtFechaHora" class="form-control" @bind-Value="_venta.FechaHora" />
+            <InputDate id="txtFechaHora" class="form-control" @bind-Value="_venta.FechaHora" readonly />
             <ValidationMessage For="()=>_venta.FechaHora" />
         </div>
     </div>
@@ -30,10 +31,14 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="txtIdPro" class="col-2 col-form-label">Id producto</label>
+        <label for="txtIdPro" class="col-2 col-form-label">Producto</label>
         <div class="col-10">
-            <InputNumber id="txtIdPro" class="form-control" @bind-Value="_venta.IdProducto" />
-            <ValidationMessage For="()=>_venta.IdProducto" />
+            <InputSelect @bind-Value="_venta.IdProducto">
+                @foreach (Inventario inventario in _inventarios ?? [])
+                {
+                    <option value="@inventario.Id">@inventario.NombreProducto</option>
+                }
+            </InputSelect>
         </div>
     </div>
     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -45,9 +50,11 @@
     public int Id { get; set; }
     private string _mensaje = "";
     private Venta? _venta = new();
+    private List<Inventario>? _inventarios;
 
     protected override async Task OnInitializedAsync()
     {
+        _inventarios = await _repoInventarios.GetAll();
         if (Id > 0)
         {
             _venta = await _repositorio.Get(Id);
@@ -55,7 +62,9 @@
         }
         else
         {
-            _mensaje = "Nuevo";
+            DateTime fechaActual = DateTime.Now;
+            _venta.FechaHora = DateTime.Now;
+            _mensaje = "Nueva";
         }
     }
 
@@ -74,6 +83,6 @@
 
     private void Cancelar()
     {
-        _navigator.NavigateTo("/ventas");
+        _navigator.NavigateTo("/ventas", forceLoad: true);
     }
 }
