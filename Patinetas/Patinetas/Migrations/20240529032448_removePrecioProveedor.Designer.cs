@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Patinetas.Modelos;
 
@@ -11,9 +12,11 @@ using Patinetas.Modelos;
 namespace Patinetas.Migrations
 {
     [DbContext(typeof(PatinetasDBContext))]
-    partial class PatinetasDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240529032448_removePrecioProveedor")]
+    partial class removePrecioProveedor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

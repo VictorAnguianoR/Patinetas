@@ -13,6 +13,7 @@ namespace Patinetas.Modelos
         public int CantidadDisponible { get; set; }
 
         [Required(ErrorMessage = "El precio es obligatorio")]
+        [Range(1, double.MaxValue, ErrorMessage = "El precio debe ser mayor que 0")]
         public decimal Precio { get; set; }
 
         [Required(ErrorMessage = "La clave es obligatoria")]

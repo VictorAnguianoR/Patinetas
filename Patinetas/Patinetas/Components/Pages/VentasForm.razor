@@ -9,8 +9,12 @@
 
 <EditForm Model="_venta" FormName="frmVenta" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
+    @if (_showError)
+    {
+        <div class="alert alert-danger" role="alert">No hay suficiente producto en el inventario</div>
+    }
     <div class="row mb-3">
-        <label for="txtFechaHora" class="col-2 col-form-label">Fecha y hora</label>
+        <label for="txtFechaHora" class="col-2 col-form-label">Fecha</label>
         <div class="col-10">
             <InputDate id="txtFechaHora" class="form-control" @bind-Value="_venta.FechaHora" readonly />
             <ValidationMessage For="()=>_venta.FechaHora" />
@@ -24,21 +28,16 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="txtPrecioT" class="col-2 col-form-label">Precio total</label>
+        <label for="IdPro" class="col-2 col-form-label">Producto</label>
         <div class="col-10">
-            <InputNumber id="txtPrecioT" class="form-control" @bind-Value="_venta.PrecioTotal" />
-            <ValidationMessage For="()=>_venta.PrecioTotal" />
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label for="txtIdPro" class="col-2 col-form-label">Producto</label>
-        <div class="col-10">
-            <InputSelect @bind-Value="_venta.IdProducto">
+            <InputSelect class="form-control" id="IdPro" @bind-Value="_venta.IdProducto">
+                <option value="0" disabled="disabled">Seleccione un producto...</option>
                 @foreach (Inventario inventario in _inventarios ?? [])
                 {
                     <option value="@inventario.Id">@inventario.NombreProducto</option>
                 }
             </InputSelect>
+            <ValidationMessage For="()=>_venta.IdProducto   " />
         </div>
     </div>
     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -51,10 +50,12 @@
     private string _mensaje = "";
     private Venta? _venta = new();
     private List<Inventario>? _inventarios;
+    private bool _showError = false;
 
     protected override async Task OnInitializedAsync()
     {
         _inventarios = await _repoInventarios.GetAll();
+        _venta.PrecioTotal = 0;
         if (Id > 0)
         {
             _venta = await _repositorio.Get(Id);
@@ -70,6 +71,17 @@
 
     private async Task Guardar()
     {
+        Inventario producto = await _repoInventarios.Get(_venta.IdProducto);
+        int diferencia = producto!.CantidadDisponible - _venta.CantidadVendida;
+        if (diferencia < 0)
+        {
+            _showError = true;
+            return;
+        }
+
+        producto.CantidadDisponible -= _venta.CantidadVendida;
+        _venta.PrecioTotal = producto.Precio * _venta.CantidadVendida;
+
         if (Id > 0)
         {
             await _repositorio.Update(Id, _venta!);

@@ -45,7 +45,6 @@ namespace Patinetas.Repositorio
             {
                 proveedorActual.Nombre = proveedor.Nombre;
                 proveedorActual.Correo = proveedor.Correo;
-                proveedorActual.Precio = proveedor.Precio;
                 proveedorActual.ClaveProducto = proveedor.ClaveProducto;
                 await _context.SaveChangesAsync();
             }

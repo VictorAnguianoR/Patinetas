@@ -31,9 +31,10 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="txtProveedor" class="col-2 col-form-label">Id proveedor</label>
+        <label for="IdProveedor" class="col-2 col-form-label">Id proveedor</label>
         <div class="col-10">
-            <InputSelect @bind-Value="_inventario.ProveedorId">
+            <InputSelect class="form-control" id="IdProveedor" @bind-Value="_inventario.ProveedorId">
+                <option value="0" disabled="disabled">Seleccione un proveedor...</option>
                 @foreach(Proveedor proveedor in _proveedores ?? [])
                 {
                     <option value="@proveedor.Id">@proveedor.Nombre</option>

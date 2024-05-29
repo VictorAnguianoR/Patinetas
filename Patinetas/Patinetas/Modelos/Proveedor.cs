@@ -13,9 +13,6 @@ namespace Patinetas.Modelos
         [EmailAddress(ErrorMessage = "El correo no tiene un formato válido")]
         public string? Correo { get; set; }
 
-        [Required(ErrorMessage = "El precio es obligatorio")]
-        public decimal Precio { get; set; }
-
         [Required(ErrorMessage = "La clave es obligatoria")]
         public string? ClaveProducto { get; set; }
 

@@ -22,8 +22,7 @@ else
             <tr>
                 <th>Nombre</th>
                 <th>Correo</th>
-                <th>Precio</th>
-                <th>Clave Producto</th>
+                <th>Clave</th>
             </tr>
         </thead>
         <tbody>
@@ -34,7 +33,6 @@ else
                 <tr>
                     <td>@proveedor.Nombre</td>
                     <td>@proveedor.Correo</td>
-                    <td>@proveedor.Precio</td>
                     <td>@proveedor.ClaveProducto</td>
                     <td>
                         <button class="btn btn-sm" title="Modificar" @onclick="()=>Modificar(proveedor.Id)">
